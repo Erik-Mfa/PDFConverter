@@ -1,26 +1,20 @@
 const express = require("express");
 const app = express();
-const multer = require("multer");
+const upload = require("./src/multer/multer")
+const fs = require("fs");
+
 
 app.set('view engine', 'ejs');
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, "uploads/")
-    },
-    filename: function(req, file, cb){
-        cb(null, file.originalname)
-    }
-})
-
-const upload = multer({storage})
 
 app.get("/",(req, res) => {
     res.render("index");
 })
 
 app.post("/upload", upload.single("file"), (req, res) => {
-    res.send("Arquivo recebido");
+    // var document = fs.readFileSync(file, 'utf8')
+    // var file = './uploads/' + JSON.stringify(req.file.filename);
+
+    res.send("enviado");
 })
 
 app.listen(3000, () => {
